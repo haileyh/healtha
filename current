@@ -1,39 +1,22 @@
-	<?php
-	('DB_SERVER', 'localhost');
-	define('DB_USERNAME', 'root');
-	define('DB_PASSWORD', '');
-	define('DB_DATABASE', 'HealthApp');
-	$db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE) or die("Unable to connect to MySQL"); //getting information from the database
-	$sql = "SELECT * FROM 'Tbl Diseases'";
-	if (mysqli_query($db, $sql)){
-	echo "yes";
-	}else{
-	echo "no";
-	}
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 
-	
-	if (isset($db)){
-	echo "works";
-	}else{
-	echo "nope";
-	} 
-	
-	$result = mysqli_query($db,$sql);
-	$rows = mysqli_fetch_array($result);
-	echo 'Disease: ' . $result;
-	
-	if (mysqli_connect_errno()) {
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	}
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_DATABASE', 'HealthApp');
 
-	ini_set('display_errors',1);
-	ini_set('display_startup_errors',1);
-	error_reporting(-1);
+$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD,DB_DATABASE) or die("Unable to connect to MySQL");
 
+if (mysqli_connect_errno()) {
+	echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
 
-	/*if (!mysqli_query($db, "SET a=1")) {
-	    printf("Errormessage: %s\n", mysqli_error($db));
-	}*/
-	
-	mysqli_close($db);
-?>
+$query = mysqli_query($conn, "SELECT * FROM `Tbl Diseases`");
+$rows = mysqli_fetch_array($query);
+
+echo "Printing results: <br />";
+print_r($rows);
+
+mysqli_close($conn);
